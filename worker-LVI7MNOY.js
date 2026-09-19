@@ -1,0 +1,1 @@
+addEventListener("message",({data:t})=>{let o=t.articles??[],e=(t.searchTerm??"").trim().toLowerCase();if(!e){postMessage(o);return}let n=o.filter(s=>{let r=s.title?.toLowerCase()??"",c=s.authorName?.toLowerCase()??"",i=s.description?.toLowerCase()??"",a=s.content?.toLowerCase()??"";return r.includes(e)||c.includes(e)||i.includes(e)||a.includes(e)});postMessage(n)});
