@@ -1,0 +1,268 @@
+<section class="create-post-page">
+
+  <div class="create-post-container">
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+      <span class="section-label">
+        WRITER AREA
+      </span>
+
+      <h1>Create New Post</h1>
+
+      <p>
+        Write your story and publish it when you're ready.
+      </p>
+
+    </div>
+
+
+    <form
+      class="article-form"
+      [formGroup]="articleForm">
+
+
+      <!-- TITLE -->
+
+      <div class="form-group">
+
+        <label for="title">
+          Article Title
+        </label>
+
+        <input
+          id="title"
+          type="text"
+          formControlName="title"
+          placeholder="Enter a clear and engaging title"
+        />
+
+        @if (
+          articleForm.controls['title'].touched &&
+          articleForm.controls['title'].invalid
+        ) {
+
+          <small class="validation-error">
+            Title is required and must be between
+            5 and 150 characters.
+          </small>
+
+        }
+
+      </div>
+
+
+      <!-- DESCRIPTION -->
+
+      <div class="form-group">
+
+        <div class="label-row">
+
+          <label for="description">
+            Brief Description
+          </label>
+
+          <span>
+            Max 300 characters
+          </span>
+
+        </div>
+
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="3"
+          placeholder="Give readers a short summary of your article">
+        </textarea>
+
+        @if (
+          articleForm.controls['description'].touched &&
+          articleForm.controls['description'].invalid
+        ) {
+
+          <small class="validation-error">
+            Description is required and must be
+            300 characters or less.
+          </small>
+
+        }
+
+      </div>
+
+
+      <!-- THUMBNAIL -->
+
+      <div class="form-group">
+
+        <label for="thumbnail">
+          Thumbnail Image URL
+        </label>
+
+        <input
+          id="thumbnail"
+          type="url"
+          formControlName="thumbnailUrl"
+          placeholder="https://example.com/article-image.jpg"
+        />
+
+        <small class="helper-text">
+          Add an image URL to display a thumbnail
+          with your article.
+        </small>
+
+      </div>
+
+
+      <!-- PREVIEW -->
+
+      @if (articleForm.controls['thumbnailUrl'].value) {
+
+        <div class="thumbnail-preview">
+
+          <span class="preview-label">
+            Thumbnail Preview
+          </span>
+
+          <img
+            [src]="articleForm.controls['thumbnailUrl'].value"
+            alt="Article thumbnail preview"
+          />
+
+        </div>
+
+      }
+
+
+      <!-- CONTENT -->
+
+      <div class="form-group">
+
+        <label>
+          Article Content
+        </label>
+
+        <div class="editor-container">
+
+          <app-rich-text-editor
+            formControlName="content">
+          </app-rich-text-editor>
+
+        </div>
+
+        @if (
+          articleForm.controls['content'].touched &&
+          articleForm.controls['content'].invalid
+        ) {
+
+          <small class="validation-error">
+            Article content is required.
+          </small>
+
+        }
+
+      </div>
+
+
+      <!-- SCHEDULE -->
+
+      <div class="schedule-section">
+
+        <div>
+
+          <h3>
+            Schedule Publication
+          </h3>
+
+          <p>
+            Optional. Choose a future date and time
+            if you want to publish later.
+          </p>
+
+        </div>
+
+        <input
+          id="schedule"
+          type="datetime-local"
+          formControlName="scheduledAt"
+        />
+
+      </div>
+
+
+      <!-- MESSAGES -->
+
+      @if (successMessage) {
+
+        <div class="success-message">
+          {{ successMessage }}
+        </div>
+
+      }
+
+
+      @if (errorMessage) {
+
+        <div class="error-message">
+          {{ errorMessage }}
+        </div>
+
+      }
+
+
+      <!-- ACTIONS -->
+
+      <div class="form-actions">
+
+        <button
+          class="secondary-button"
+          type="button"
+          (click)="saveDraft()"
+          [disabled]="isSaving">
+
+          {{
+            isSaving
+              ? 'Saving...'
+              : 'Save Draft'
+          }}
+
+        </button>
+
+
+        <div class="primary-actions">
+
+          <button
+            class="schedule-button"
+            type="button"
+            (click)="scheduleArticle()"
+            [disabled]="articleForm.invalid || isSaving">
+
+            Schedule Post
+
+          </button>
+
+
+          <button
+            class="publish-button"
+            type="button"
+            (click)="publishArticle()"
+            [disabled]="articleForm.invalid || isSaving">
+
+            {{
+              isSaving
+                ? 'Please wait...'
+                : 'Publish Now'
+            }}
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</section>

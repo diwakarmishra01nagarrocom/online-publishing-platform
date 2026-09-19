@@ -1,0 +1,261 @@
+<section class="home-page">
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <span class="eyebrow">
+        ONLINE PUBLISHING PLATFORM
+      </span>
+
+      <h1>
+        Discover Articles
+      </h1>
+
+      <p>
+        Explore stories, ideas and insights
+        shared by our community of writers.
+      </p>
+
+
+      <div class="search-box">
+
+        <input
+          id="articleSearch"
+          type="search"
+          [(ngModel)]="searchTerm"
+          (input)="searchArticles()"
+          placeholder="Search by title, author or keyword"
+          aria-label="Search articles"
+        />
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <div class="page-container">
+
+    @if (isLoading) {
+
+      <div class="state-message">
+
+        <h2>Loading articles...</h2>
+
+        <p>
+          Please wait while we load the latest stories.
+        </p>
+
+      </div>
+
+    } @else if (errorMessage) {
+
+      <div class="state-message error">
+
+        <h2>
+          Something went wrong
+        </h2>
+
+        <p>
+          {{ errorMessage }}
+        </p>
+
+      </div>
+
+    } @else if (articles.length === 0) {
+
+      <div class="state-message">
+
+        <h2>
+          No articles published yet
+        </h2>
+
+        <p>
+          Published articles will appear here.
+        </p>
+
+      </div>
+
+    } @else {
+
+
+      <!-- FEATURED ARTICLE -->
+
+      @if (
+        featuredArticle &&
+        !searchTerm.trim()
+      ) {
+
+        <section class="featured-section">
+
+          <div class="section-heading">
+
+            <div>
+
+              <span class="section-label">
+                FEATURED
+              </span>
+
+              <h2>
+                Featured Article
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="featured-card">
+
+            <app-article-card
+              [article]="featuredArticle">
+            </app-article-card>
+
+          </div>
+
+        </section>
+
+      }
+
+
+      <!-- ALL ARTICLES -->
+
+      <section class="articles-section">
+
+        <div class="articles-header">
+
+          <div>
+
+            <span class="section-label">
+              EXPLORE
+            </span>
+
+            <h2>
+              Latest Articles
+            </h2>
+
+            <p>
+              {{ filteredArticles.length }}
+              article(s) found
+            </p>
+
+          </div>
+
+
+          <div class="sort-container">
+
+            <label for="sortBy">
+              Sort by
+            </label>
+
+            <select
+              id="sortBy"
+              [(ngModel)]="sortBy"
+              (change)="sortArticles()">
+
+              <option value="latest">
+                Latest
+              </option>
+
+              <option value="oldest">
+                Oldest
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        @if (
+          filteredArticles.length === 0
+        ) {
+
+          <div class="state-message">
+
+            <h3>
+              No matching articles
+            </h3>
+
+            <p>
+              Try another title, author
+              or keyword.
+            </p>
+
+          </div>
+
+        } @else {
+
+          <div class="article-grid">
+
+            @for (
+              article of paginatedArticles;
+              track article.id
+            ) {
+
+              <app-article-card
+                [article]="article">
+              </app-article-card>
+
+            }
+
+          </div>
+
+
+          @if (totalPages > 1) {
+
+            <div class="pagination">
+
+              <button
+                type="button"
+                (click)="previousPage()"
+                [disabled]="currentPage === 1">
+
+                Previous
+
+              </button>
+
+
+              <span>
+
+                Page
+                <strong>
+                  {{ currentPage }}
+                </strong>
+                of
+                <strong>
+                  {{ totalPages }}
+                </strong>
+
+              </span>
+
+
+              <button
+                type="button"
+                (click)="nextPage()"
+                [disabled]="
+                  currentPage === totalPages
+                ">
+
+                Next
+
+              </button>
+
+            </div>
+
+          }
+
+        }
+
+      </section>
+
+    }
+
+  </div>
+
+</section>

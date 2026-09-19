@@ -1,0 +1,144 @@
+<section class="author-profile-page">
+
+  <div class="author-profile-container">
+
+    <button
+      class="back-button"
+      type="button"
+      (click)="goBack()">
+      ← Back to Authors
+    </button>
+
+
+    @if (isLoading) {
+
+      <p class="status-message">
+        Loading author profile...
+      </p>
+
+    } @else if (errorMessage) {
+
+      <p class="error-message">
+        {{ errorMessage }}
+      </p>
+
+    } @else if (author) {
+
+
+      <!-- AUTHOR INFORMATION -->
+
+      <section class="author-header">
+
+        @if (author.photoUrl) {
+
+          <img
+            class="author-photo"
+            [src]="author.photoUrl"
+            [alt]="author.name"
+          />
+
+        } @else {
+
+          <div class="author-placeholder">
+            {{ author.name.charAt(0) }}
+          </div>
+
+        }
+
+
+        <div class="author-info">
+
+          <span class="author-label">
+            AUTHOR
+          </span>
+
+          <h1>
+            {{ author.name }}
+          </h1>
+
+          @if (author.bio) {
+
+            <p>
+              {{ author.bio }}
+            </p>
+
+          } @else {
+
+            <p>
+              Writer on PublishHub.
+            </p>
+
+          }
+
+        </div>
+
+      </section>
+
+
+      <!-- ARTICLES -->
+
+      <section class="author-articles">
+
+        <div class="articles-heading">
+
+          <div>
+
+            <span class="author-label">
+              PUBLISHED WORK
+            </span>
+
+            <h2>
+              Articles by {{ author.name }}
+            </h2>
+
+          </div>
+
+          <span class="article-count">
+            {{ articles.length }}
+            {{ articles.length === 1 ? 'Article' : 'Articles' }}
+          </span>
+
+        </div>
+
+
+        @if (articles.length === 0) {
+
+          <div class="empty-state">
+
+            <h3>
+              No published articles yet
+            </h3>
+
+            <p>
+              This author hasn't published
+              any articles yet.
+            </p>
+
+          </div>
+
+        } @else {
+
+          <div class="articles-list">
+
+            @for (
+              article of articles;
+              track article.id
+            ) {
+
+              <app-article-card
+                [article]="article">
+              </app-article-card>
+
+            }
+
+          </div>
+
+        }
+
+      </section>
+
+    }
+
+  </div>
+
+</section>

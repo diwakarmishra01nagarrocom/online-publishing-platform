@@ -1,0 +1,73 @@
+<article class="article-card">
+
+  <!-- Thumbnail -->
+
+  <div class="article-image">
+
+    @if (article().thumbnailUrl) {
+
+      <img
+        [src]="article().thumbnailUrl"
+        [alt]="article().title"
+      />
+
+    } @else {
+
+      <div class="image-placeholder">
+        Article
+      </div>
+
+    }
+
+  </div>
+
+
+  <!-- Content -->
+
+  <div class="article-content">
+
+    <div class="article-meta">
+
+      <span class="author">
+        {{ article().authorName }}
+      </span>
+
+      @if (article().publishedAt) {
+
+        <span class="date">
+          {{ article().publishedAt?.toLocaleDateString() }}
+        </span>
+
+      }
+
+    </div>
+
+
+    <h2>
+      {{ article().title }}
+    </h2>
+
+
+    <p class="description">
+      {{ article().description }}
+    </p>
+
+
+    <div class="card-footer">
+
+      <button
+        type="button"
+        (click)="openArticle()">
+
+        Read Article
+        <span aria-hidden="true">
+          →
+        </span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</article>

@@ -1,0 +1,69 @@
+<nav class="navbar">
+
+  <!-- Brand -->
+  <a
+    class="navbar-brand"
+    routerLink="/home">
+    ArticleHub
+  </a>
+
+
+  @if (!isLoading && currentUser) {
+
+    <!-- Main Navigation -->
+    <div class="navbar-links">
+
+      <a routerLink="/home">
+        Home
+      </a>
+
+      <a routerLink="/authors">
+        Authors
+      </a>
+
+
+      <!-- Writer-only navigation -->
+      @if (isWriter) {
+
+        <a routerLink="/writer">
+          Dashboard
+        </a>
+
+        <a routerLink="/writer/create">
+          Create Post
+        </a>
+
+      }
+
+    </div>
+
+
+    <!-- User -->
+    <div class="navbar-user">
+
+      @if (currentUser.photoUrl) {
+
+        <img
+          [src]="currentUser.photoUrl"
+          [alt]="currentUser.name"
+          class="user-photo"
+        />
+
+      }
+
+      <span>
+        {{ currentUser.name }}
+      </span>
+
+
+      <button
+        type="button"
+        (click)="logout()">
+        Logout
+      </button>
+
+    </div>
+
+  }
+
+</nav>

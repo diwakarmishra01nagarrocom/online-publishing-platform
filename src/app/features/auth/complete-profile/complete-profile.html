@@ -1,0 +1,199 @@
+<section class="profile-page">
+
+  <div class="profile-card">
+
+    <div class="brand">
+      PublishHub
+    </div>
+
+    <h1>
+      Complete Your Profile
+    </h1>
+
+    <p class="subtitle">
+      Tell us a little about yourself and
+      choose how you want to use PublishHub.
+    </p>
+
+
+    <!-- GOOGLE PROFILE PHOTO -->
+
+    @if (photoUrl) {
+
+      <div class="profile-photo">
+
+        <img
+          [src]="photoUrl"
+          [alt]="name"
+        />
+
+      </div>
+
+    }
+
+
+    <!-- NAME -->
+
+    <div class="form-group">
+
+      <label for="name">
+        Name
+      </label>
+
+      <input
+        id="name"
+        type="text"
+        [(ngModel)]="name"
+        placeholder="Your name"
+      />
+
+    </div>
+
+
+    <!-- EMAIL -->
+
+    <div class="form-group">
+
+      <label for="email">
+        Email
+      </label>
+
+      <input
+        id="email"
+        type="email"
+        [(ngModel)]="email"
+        disabled
+      />
+
+      <small>
+        This email is linked to your Google account.
+      </small>
+
+    </div>
+
+
+    <!-- ROLE -->
+
+    <div class="form-group">
+
+      <label>
+        I want to use PublishHub as
+      </label>
+
+
+      <div class="role-options">
+
+        <!-- READER -->
+
+        <label
+          class="role-card"
+          [class.selected]="role === 'reader'">
+
+          <input
+            type="radio"
+            name="role"
+            value="reader"
+            [(ngModel)]="role"
+          />
+
+          <div>
+
+            <strong>
+              Reader
+            </strong>
+
+            <span>
+              Discover articles, follow writers
+              and join discussions.
+            </span>
+
+          </div>
+
+        </label>
+
+
+        <!-- WRITER -->
+
+        <label
+          class="role-card"
+          [class.selected]="role === 'writer'">
+
+          <input
+            type="radio"
+            name="role"
+            value="writer"
+            [(ngModel)]="role"
+          />
+
+          <div>
+
+            <strong>
+              Writer / Author
+            </strong>
+
+            <span>
+              Create, manage and publish
+              your own articles.
+            </span>
+
+          </div>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <!-- WRITER BIO -->
+
+    @if (role === 'writer') {
+
+      <div class="form-group">
+
+        <label for="bio">
+          Author Bio
+        </label>
+
+        <textarea
+          id="bio"
+          [(ngModel)]="bio"
+          rows="4"
+          placeholder="Tell readers a little about yourself...">
+        </textarea>
+
+      </div>
+
+    }
+
+
+    <!-- ERROR -->
+
+    @if (errorMessage) {
+
+      <p class="error-message">
+        {{ errorMessage }}
+      </p>
+
+    }
+
+
+    <!-- SAVE -->
+
+    <button
+      class="continue-button"
+      type="button"
+      (click)="saveProfile()"
+      [disabled]="isSaving">
+
+      {{
+        isSaving
+          ? 'Saving...'
+          : 'Continue'
+      }}
+
+    </button>
+
+  </div>
+
+</section>

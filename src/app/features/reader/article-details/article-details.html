@@ -1,0 +1,516 @@
+<section class="article-details-page">
+
+  <div class="page-container">
+
+    <button
+      class="back-button"
+      type="button"
+      (click)="goBack()">
+
+      ← Back to Articles
+
+    </button>
+
+
+    @if (isLoading) {
+
+      <div class="state-message">
+
+        <h2>
+          Loading article...
+        </h2>
+
+      </div>
+
+    } @else if (errorMessage) {
+
+      <div class="state-message error">
+
+        <h2>
+          {{ errorMessage }}
+        </h2>
+
+      </div>
+
+    } @else if (article) {
+
+
+      <!-- ===================== -->
+      <!-- ARTICLE -->
+      <!-- ===================== -->
+
+      <article class="article">
+
+        <header class="article-header">
+
+          <span class="article-label">
+            ARTICLE
+          </span>
+
+
+          <h1>
+            {{ article.title }}
+          </h1>
+
+
+          <p class="article-description">
+            {{ article.description }}
+          </p>
+
+
+          <div class="article-meta">
+
+            <span>
+              By
+              <strong>
+                {{ article.authorName }}
+              </strong>
+            </span>
+
+
+            @if (article.publishedAt) {
+
+              <span>
+                {{ article.publishedAt.toLocaleDateString() }}
+              </span>
+
+            }
+
+          </div>
+
+        </header>
+
+
+        @if (article.thumbnailUrl) {
+
+          <div class="hero-image">
+
+            <img
+              [src]="article.thumbnailUrl"
+              [alt]="article.title"
+            />
+
+          </div>
+
+        }
+
+
+        <div
+          class="article-body"
+          [innerHTML]="article.content">
+        </div>
+
+      </article>
+
+
+      <!-- ===================== -->
+      <!-- AUTHOR -->
+      <!-- ===================== -->
+
+      @if (author) {
+
+        <section class="author-section">
+
+          <div class="author-profile">
+
+            @if (author.photoUrl) {
+
+              <img
+                [src]="author.photoUrl"
+                [alt]="author.name"
+              />
+
+            }
+
+
+            <div class="author-info">
+
+              <span class="section-label">
+                ABOUT THE AUTHOR
+              </span>
+
+              <h2>
+                {{ author.name }}
+              </h2>
+
+
+              @if (author.bio) {
+
+                <p>
+                  {{ author.bio }}
+                </p>
+
+              } @else {
+
+                <p>
+                  Writer on our publishing platform.
+                </p>
+
+              }
+
+            </div>
+
+          </div>
+
+        </section>
+
+      }
+
+
+      <!-- ===================== -->
+      <!-- COMMENTS -->
+      <!-- ===================== -->
+
+      <section class="comments-section">
+
+        <div class="comments-header">
+
+          <div>
+
+            <span class="section-label">
+              DISCUSSION
+            </span>
+
+            <h2>
+              Comments
+            </h2>
+
+          </div>
+
+
+          <div class="comment-sort">
+
+            <label for="commentSort">
+              Sort by
+            </label>
+
+
+            <select
+              id="commentSort"
+              [(ngModel)]="commentSortBy">
+
+              <option value="newest">
+                Newest
+              </option>
+
+              <option value="oldest">
+                Oldest
+              </option>
+
+              <option value="mostLiked">
+                Most Liked
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- COMMENT FORM -->
+
+        <div class="comment-form">
+
+          <label for="comment">
+            Join the discussion
+          </label>
+
+
+          <textarea
+            id="comment"
+            [(ngModel)]="commentText"
+            placeholder="Share your thoughts..."
+            rows="4">
+          </textarea>
+
+
+          <button
+            type="button"
+            (click)="postComment()"
+            [disabled]="isPostingComment">
+
+            {{
+              isPostingComment
+                ? 'Posting...'
+                : 'Post Comment'
+            }}
+
+          </button>
+
+        </div>
+
+
+        @if (commentSuccessMessage) {
+
+          <p class="success-message">
+            {{ commentSuccessMessage }}
+          </p>
+
+        }
+
+
+        @if (commentErrorMessage) {
+
+          <p class="error-message">
+            {{ commentErrorMessage }}
+          </p>
+
+        }
+
+
+        <!-- COMMENTS -->
+
+        @if (mainComments.length === 0) {
+
+          <div class="no-comments">
+
+            <p>
+              No comments yet.
+              Be the first to join the discussion.
+            </p>
+
+          </div>
+
+        } @else {
+
+          <div class="comments-list">
+
+            @for (
+              comment of mainComments;
+              track comment.id
+            ) {
+
+              <article class="comment">
+
+                <div class="comment-user">
+
+                  @if (comment.userPhotoUrl) {
+
+                    <img
+                      [src]="comment.userPhotoUrl"
+                      [alt]="comment.userName"
+                    />
+
+                  }
+
+
+                  <div>
+
+                    <strong>
+                      {{ comment.userName }}
+                    </strong>
+
+
+                    @if (comment.createdAt) {
+
+                      <small>
+                        {{ comment.createdAt.toLocaleString() }}
+                      </small>
+
+                    }
+
+                  </div>
+
+                </div>
+
+
+                <p class="comment-content">
+                  {{ comment.content }}
+                </p>
+
+
+                <div class="comment-actions">
+
+                  <button
+                    type="button"
+                    (click)="likeComment(comment.id)"
+                    [disabled]="
+                      likingCommentId === comment.id
+                    ">
+
+                    {{
+                      likingCommentId === comment.id
+                        ? 'Liking...'
+                        : 'Like (' +
+                          (comment.likeCount ?? 0) +
+                          ')'
+                    }}
+
+                  </button>
+
+
+                  <button
+                    type="button"
+                    (click)="startReply(comment.id)">
+
+                    Reply
+
+                  </button>
+
+                </div>
+
+
+                <!-- REPLY FORM -->
+
+                @if (
+                  replyingToCommentId ===
+                  comment.id
+                ) {
+
+                  <div class="reply-form">
+
+                    <textarea
+                      [(ngModel)]="replyText"
+                      placeholder="Write your reply..."
+                      rows="3">
+                    </textarea>
+
+
+                    <div class="reply-buttons">
+
+                      <button
+                        type="button"
+                        (click)="postReply(comment.id)"
+                        [disabled]="isPostingReply">
+
+                        {{
+                          isPostingReply
+                            ? 'Posting...'
+                            : 'Post Reply'
+                        }}
+
+                      </button>
+
+
+                      <button
+                        class="secondary-button"
+                        type="button"
+                        (click)="cancelReply()">
+
+                        Cancel
+
+                      </button>
+
+                    </div>
+
+                  </div>
+
+                }
+
+
+                <!-- REPLIES -->
+
+                @if (
+                  getReplies(comment.id).length > 0
+                ) {
+
+                  <div class="replies">
+
+                    @for (
+                      reply of getReplies(comment.id);
+                      track reply.id
+                    ) {
+
+                      <article class="reply">
+
+                        <div class="comment-user">
+
+                          @if (reply.userPhotoUrl) {
+
+                            <img
+                              [src]="reply.userPhotoUrl"
+                              [alt]="reply.userName"
+                            />
+
+                          }
+
+
+                          <div>
+
+                            <strong>
+                              {{ reply.userName }}
+                            </strong>
+
+
+                            @if (reply.createdAt) {
+
+                              <small>
+                                {{ reply.createdAt.toLocaleString() }}
+                              </small>
+
+                            }
+
+                          </div>
+
+                        </div>
+
+
+                        <p>
+                          {{ reply.content }}
+                        </p>
+
+                      </article>
+
+                    }
+
+                  </div>
+
+                }
+
+              </article>
+
+            }
+
+          </div>
+
+        }
+
+      </section>
+
+
+      <!-- ===================== -->
+      <!-- SAME AUTHOR ARTICLES -->
+      <!-- ===================== -->
+
+      @if (authorArticles.length > 0) {
+
+        <section class="author-articles">
+
+          <div class="section-heading">
+
+            <span class="section-label">
+              KEEP READING
+            </span>
+
+            <h2>
+              More from {{ article.authorName }}
+            </h2>
+
+          </div>
+
+
+          <div class="article-grid">
+
+            @for (
+              authorArticle of authorArticles;
+              track authorArticle.id
+            ) {
+
+              <app-article-card
+                [article]="authorArticle">
+              </app-article-card>
+
+            }
+
+          </div>
+
+        </section>
+
+      }
+
+    }
+
+  </div>
+
+</section>

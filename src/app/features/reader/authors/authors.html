@@ -1,0 +1,95 @@
+<section class="authors-page">
+
+  <h1>Explore Authors</h1>
+
+  <p>
+    Discover writers and explore their profiles.
+  </p>
+
+
+  <div class="author-search">
+
+    <label for="authorSearch">
+      Search Authors
+    </label>
+
+    <input
+      id="authorSearch"
+      type="search"
+      [(ngModel)]="searchTerm"
+      (input)="searchAuthors()"
+      placeholder="Search by author name"
+    />
+
+  </div>
+
+
+  @if (isLoading) {
+
+    <p>
+      Loading authors...
+    </p>
+
+  } @else if (errorMessage) {
+
+    <p>
+      {{ errorMessage }}
+    </p>
+
+  } @else if (filteredAuthors.length === 0) {
+
+    <p>
+      No authors found.
+    </p>
+
+  } @else {
+
+    <div class="authors-list">
+
+      @for (
+        author of filteredAuthors;
+        track author.uid
+      ) {
+
+        <div  class="author-card"
+               (click)="openAuthor(author.uid)"
+                  role="button"
+                  tabindex="0">
+
+
+          <!-- Writer Profile Picture -->
+
+          @if (author.photoUrl) {
+
+            <img
+              [src]="author.photoUrl"
+              [alt]="author.name"
+              width="80"
+              height="80"
+            />
+
+          }
+
+
+          <!-- Writer Name -->
+
+          <h2>
+            {{ author.name }}
+          </h2>
+
+
+          <!-- Writer Bio -->
+
+          <p>
+            {{ author.bio }}
+          </p>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</section>

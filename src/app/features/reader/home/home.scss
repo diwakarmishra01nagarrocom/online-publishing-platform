@@ -1,0 +1,359 @@
+.home-page {
+  min-height: 100vh;
+  background: #f8fafc;
+  color: #111827;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+  padding: 72px 24px;
+  background:
+    linear-gradient(
+      135deg,
+      #111827 0%,
+      #1f2937 100%
+    );
+  color: #ffffff;
+}
+
+.hero-content {
+  width: min(900px, 100%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 14px;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+
+  color: #cbd5e1;
+}
+
+.hero h1 {
+  margin: 0;
+
+  font-size: clamp(
+    2.2rem,
+    5vw,
+    4rem
+  );
+
+  line-height: 1.1;
+}
+
+.hero p {
+  max-width: 620px;
+  margin: 18px auto 30px;
+
+  color: #d1d5db;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.search-box input {
+  width: 100%;
+
+  padding: 16px 20px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #111827;
+
+  font-size: 1rem;
+
+  outline: none;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.15);
+}
+
+.search-box input:focus {
+  box-shadow:
+    0 0 0 3px
+    rgba(255, 255, 255, 0.25);
+}
+
+
+/* =========================
+   PAGE CONTAINER
+========================= */
+
+.page-container {
+  width: min(1200px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 48px 0 72px;
+}
+
+
+/* =========================
+   SECTION
+========================= */
+
+.featured-section {
+  margin-bottom: 56px;
+}
+
+.section-heading,
+.articles-header {
+  margin-bottom: 24px;
+}
+
+.section-label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #6b7280;
+
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.section-heading h2,
+.articles-header h2 {
+  margin: 0;
+
+  font-size: 1.8rem;
+}
+
+.articles-header p {
+  margin: 6px 0 0;
+
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+
+/* =========================
+   FEATURED
+========================= */
+
+.featured-card {
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+
+  padding: 8px;
+
+  box-shadow:
+    0 8px 24px
+    rgba(15, 23, 42, 0.06);
+}
+
+
+/* =========================
+   ARTICLE HEADER
+========================= */
+
+.articles-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+
+/* =========================
+   SORT
+========================= */
+
+.sort-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sort-container label {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.sort-container select {
+  padding: 10px 34px 10px 12px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #374151;
+
+  cursor: pointer;
+}
+
+
+/* =========================
+   ARTICLE GRID
+========================= */
+
+.article-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 24px;
+}
+
+.article-grid app-article-card {
+  display: block;
+  height: 100%;
+}
+
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+
+  margin-top: 48px;
+}
+
+.pagination span {
+  color: #4b5563;
+  font-size: 0.9rem;
+}
+
+.pagination button {
+  padding: 10px 18px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #111827;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #111827;
+  color: #ffffff;
+  border-color: #111827;
+}
+
+.pagination button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+
+/* =========================
+   STATES
+========================= */
+
+.state-message {
+  padding: 60px 20px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.state-message h2,
+.state-message h3 {
+  margin-top: 0;
+}
+
+.state-message p {
+  margin-bottom: 0;
+  color: #6b7280;
+}
+
+.state-message.error {
+  border-color: #fecaca;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+  .article-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 640px) {
+
+  .hero {
+    padding: 50px 20px;
+  }
+
+  .page-container {
+    width: min(
+      100% - 28px,
+      1200px
+    );
+
+    padding-top: 32px;
+  }
+
+  .articles-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .sort-container {
+    width: 100%;
+  }
+
+  .sort-container select {
+    flex: 1;
+  }
+
+  .article-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pagination {
+    gap: 10px;
+  }
+
+  .pagination button {
+    padding: 9px 12px;
+  }
+
+}

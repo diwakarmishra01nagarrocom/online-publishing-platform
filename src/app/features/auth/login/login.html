@@ -1,0 +1,56 @@
+<section class="login-page">
+
+  <div class="login-card">
+
+    <div class="brand">
+      PublishHub
+    </div>
+
+    <h1>
+      Welcome to PublishHub
+    </h1>
+
+    <p class="subtitle">
+      Discover stories, share ideas,
+      and connect with writers.
+    </p>
+
+
+    <button
+      class="google-button"
+      type="button"
+      (click)="loginWithGoogle()"
+      [disabled]="isLoading">
+
+      <span class="google-icon">
+        G
+      </span>
+
+      {{
+        isLoading
+          ? 'Signing in...'
+          : 'Continue with Google'
+      }}
+
+    </button>
+
+
+    <p class="account-info">
+      New to PublishHub?
+      Sign in with Google and choose
+      whether you want to join as a
+      Reader or Writer.
+    </p>
+
+
+    @if (errorMessage) {
+
+      <p class="error-message">
+        {{ errorMessage }}
+      </p>
+
+    }
+
+  </div>
+
+</section>
