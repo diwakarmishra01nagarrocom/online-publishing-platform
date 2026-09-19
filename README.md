@@ -203,10 +203,10 @@ Readers can:
 ## Demo
 
 ### Live Application
-To be added after deployment.
+https://diwakarmishra01nagarrocom.github.io/online-publishing-platform/
 
 ### GitHub Repository
-To be added after pushing the project to GitHub.
+[To be added after pushing the project to GitHub.](https://github.com/diwakarmishra01nagarrocom/online-publishing-platform)
 
 ## Notes
 
